@@ -1,3 +1,4 @@
+require('dotenv').config();
 import server from './api/server';
 const PORT = process.env.PORT || 4004;
 
