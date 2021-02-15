@@ -4,7 +4,6 @@ import jwt from 'jsonwebtoken';
 import { add, remove, getBy, update } from '../models/adminModel';
 import { jwtSecret, rounds } from '../envVariables';
 
-
 const route = express.Router();
 
 // @POST auth/register
