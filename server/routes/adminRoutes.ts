@@ -1,7 +1,7 @@
 import express from 'express';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-import { add, remove, getBy, } from '../models/adminModel';
+import { add, remove, getBy, update } from '../models/adminModel';
 import { jwtSecret, rounds } from '../envVariables';
 
 
@@ -34,6 +34,29 @@ route.post('/login', async (req, res) => {
          res.status(200).json({ token });
       } else {
          res.status(400).json({ message: 'Invalid email or password' });
+      }
+   } catch (error) {
+      res.status(500).json({ message: error.message });
+   }
+});
+
+// @PATCH auth/edit/:id
+route.patch('/edit/:id', async (req, res) => {
+   const id = Number(req.params.id)
+   const changes = req.body;
+
+   try {
+      if(changes.email) {
+         await update(id, changes);
+         res.status(200).json({ message: 'profile updated!' });
+      } else if(changes.name) {
+         await update(id, changes);
+         res.status(200).json({ message: 'profile updated!' });
+      } else if(changes.password) {
+         const hashPassword = bcrypt.hashSync(changes.password, rounds);
+         changes.password = hashPassword;
+         await update(id, changes);
+         res.status(200).json({ message: 'profile updated!' });
       }
    } catch (error) {
       res.status(500).json({ message: error.message });
