@@ -1,4 +1,4 @@
-import { user, password, host, port } from './envVariables';
+import { user, password, host, dbPort } from './envVariables';
 
 module.exports = {
 
@@ -8,7 +8,7 @@ module.exports = {
       user,
       password,
       host,
-      port,
+      port: dbPort,
       database: 'better_community'  
     },
     pool: {
